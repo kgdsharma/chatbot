@@ -1,0 +1,59 @@
+<html>
+        <head>
+                <title>Chat Bot</title>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">                
+        </head>
+<body>
+    <div id="chatMessage" style="position:absolute; width:100%; height:70%;border: 1px solid #ccc;
+    padding: 20px 20px; scroll:auto">        
+    </div>
+    <div>
+        <form class="form-horizontal" style="position:absolute; 
+        bottom:0px; width:100%; height:30%;padding: 50px 20px;">
+            <div class="form-group">
+                <input type="text"  id="message" placeholder="ask me"style="display: block;
+                width: 100%;
+                height: 30%;
+                padding: 50px 20px;
+                font-size: 20px;
+                line-height: 12.42857143;
+                color: #555;
+                background-color: #fff;
+                background-image: none;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+                box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+                -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+                -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+                transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;"
+                >
+            </div>
+        </form>
+    </div>
+    <script>
+    const electron = require('electron');
+    const {ipcRenderer} = electron;
+
+    const form = document.querySelector('form');
+    form.addEventListener('submit', submitForm);
+    function submitForm(e){
+        e.preventDefault();
+        const usermessage = document.querySelector('#message').value;
+        let div =document.getElementById('chatMessage');
+        div.innerHTML+='<b>'+"Agent: "+'</b>'+usermessage;
+        ipcRenderer.send('user:message', usermessage);
+        document.getElementById("message").value="";
+    } 
+    
+    ipcRenderer.on('bot:answer', function(e, reply){
+        let answerDiv = document.getElementById('chatMessage');
+        answerDiv.innerHTML+='<br>'+'<b>'+"ATLAS Bot: "+'</b>'+reply+'</br>';
+    })
+    
+    </script>
+</body>
+
+</html>
