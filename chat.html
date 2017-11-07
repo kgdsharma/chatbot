@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <title>Chat Bot</title>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                
+                <link rel="stylesheet" href="chat.css">                
+        </head>
+    <body>
+        <div class="col-sm-3 col-sm-offset-4 frame">
+            <ul id="chatlist"></ul>
+            <div>
+                <div class="msj-rta macro" style="margin:auto">
+                    <form>                       
+                    <div class="text text-r" style="background:whitesmoke !important">                        
+                        <input id ="message" class="mytext" placeholder="Type a message"/>
+                    </div>
+                </form>  
+                </div>
+            </div>
+        </div>
+        <script>
+            const electron = require('electron');
+            const {ipcRenderer} = electron;
+            const form = document.querySelector('form');
+            const $ = require('jquery');            
+            
+            form.addEventListener('submit', submitForm);
+            function submitForm(e){
+                e.preventDefault();
+                const usermessage = document.querySelector('#message').value;
+                //let div =document.getElementById('chatMessage');
+                //div.innerHTML+='<b>'+"Agent: "+'</b>'+usermessage;
+                insertChat("agent", usermessage,0);
+                ipcRenderer.send('user:message', usermessage);
+                //document.getElementById("message").value="";
+            } 
+    
+            ipcRenderer.on('bot:answer', function(e, reply){
+
+                insertChat("cbot",reply,0);
+
+                //let answerDiv = document.getElementById('chatMessage');
+                //answerDiv.innerHTML+='<br>'+'<b>'+"ATLAS Bot: "+'</b>'+reply+'</br>';
+            })
+
+
+            var agent = {};
+            agent.avatar = "../ChatBot/assets/icons/AGT.JPG";
+            var cbot = {};
+            cbot.avatar = "../ChatBot/assets/icons/BOT.JPG";
+
+            function formatAMPM(date) {
+                var hours = date.getHours();
+                var minutes = date.getMinutes();
+                var ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12; // the hour '0' should be '12'
+                minutes = minutes < 10 ? '0'+minutes : minutes;
+                var strTime = hours + ':' + minutes + ' ' + ampm;
+                return strTime;
+            }
+            
+            function insertChat(who, text, time = 0){
+                var control = "";
+                var date = formatAMPM(new Date());
+    
+                if (who == "cbot"){
+                    
+                    control = '<li style="width:100%">' +
+                                    '<div class="msj macro">' +
+                                    '<div class="avatar"><img class="img-circle" style="width:100%;" src="'+ cbot.avatar +'" /></div>' +
+                                        '<div class="text text-l">' +
+                                            '<p>'+ text +'</p>' +
+                                            '<p><small>'+date+'</small></p>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</li>';                    
+                }else{
+                    control = '<li style="width:100%;">' +
+                                    '<div class="msj-rta macro">' +
+                                        '<div class="text text-r">' +
+                                            '<p>'+text+'</p>' +
+                                            '<p><small>'+date+'</small></p>' +
+                                        '</div>' +
+                                    '<div class="avatar" style="padding:0px 0px 0px 10px !important"><img class="img-circle" style="width:100%;" src="'+agent.avatar+'" /></div>' +                                
+                            '</li>';
+                }
+                setTimeout(
+                    function(){                                                                       
+                        $("ul").append(control);
+                        $("#message").val("");
+                    }, time);
+    
+                }
+        
+        </script>        
+    </body>
+
+</html>

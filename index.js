@@ -15,11 +15,12 @@ let mainWindow;
 
 // load the app and html content in browser window
 app.on('ready',function(){
-  mainWindow = new BrowserWindow({});
-    mainWindow.setMaximizable(false);
+  mainWindow = new BrowserWindow({width:400, height:600});
+  //mainWindow.setMaximumSize(outerWidth:200 , outerHeight:300);
+  mainWindow.setMaximizable(false);
   mainWindow.setMenuBarVisibility(false);
   mainWindow.loadURL(url.format({
-    pathname:path.join(__dirname,'index.html'),
+    pathname:path.join(__dirname,'chat.html'),
     protocol:'file',
     slashes:true
   }));  
