@@ -6,12 +6,13 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "start": "electron .",    
-    "package-win": "electron-packager . Chatbot --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/Mysitemyway-Clean-3d-Glossy-3d-blue-orbs2-046.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"chatbot\" "    
+    "start": "electron .",
+    "package-win": "electron-packager . Chatbot --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/Mysitemyway-Clean-3d-Glossy-3d-blue-orbs2-046.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"chatbot\" "
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
     "electron": "^1.7.9",
+    "jquery": "^3.2.1",
     "node-rest-client": "^3.1.0",
     "request": "^2.83.0"
   },
