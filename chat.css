@@ -28,16 +28,18 @@
     margin-top:5px;width:85%;border-radius:5px;padding:5px;display:flex;
 }
 .msj-rta{
-    float:right;background:whitesmoke;
+    float:right;background:whitesmoke;margin-right: 12%;width: 60%
 }
 .msj{
-    float:left;background:white;
+    float:left;background:white;width: 60%
 }
 .frame{
-    background:#e0e0de;
-    height:450px;
-    overflow:hidden;
+    background:rgba(170, 189, 241, 0.53);
+    height:510px;
+    width:350px;
+    overflow:auto;
     padding:0;
+
 }
 .frame > div:last-of-type{
     position:absolute;bottom:5px;width:100%;display:flex;

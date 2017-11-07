@@ -3,12 +3,11 @@
         <head>
                 <title>Chat Bot</title>
                 <meta charset="utf-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1">
-                
+                <meta name="viewport" content="width=device-width, initial-scale=1">                
                 <link rel="stylesheet" href="chat.css">                
         </head>
     <body>
-        <div class="col-sm-3 col-sm-offset-4 frame">
+        <div class="col-sm-3 col-sm-offset-3 frame">
             <ul id="chatlist"></ul>
             <div>
                 <div class="msj-rta macro" style="margin:auto">
@@ -24,25 +23,33 @@
             const electron = require('electron');
             const {ipcRenderer} = electron;
             const form = document.querySelector('form');
-            const $ = require('jquery');            
+            const $ = require('jquery'); 
+            
+            // $(".mytext").on("keyup", function(e){
+            //     if (e.which == 13){
+            //         var usrmsg = $(this).val();
+            //             if (usrmsg !== ""){
+            //             insertChat("agent", usrmsg,0);
+            //             ipcRenderer.send('user:message', usrmsg);
+            //             $(this).val('');
+            //             }
+            //     }   
+            // });
             
             form.addEventListener('submit', submitForm);
             function submitForm(e){
                 e.preventDefault();
-                const usermessage = document.querySelector('#message').value;
-                //let div =document.getElementById('chatMessage');
-                //div.innerHTML+='<b>'+"Agent: "+'</b>'+usermessage;
+                const usermessage = $("#message").val();
+                if(usermessage!=="")  {              
                 insertChat("agent", usermessage,0);
                 ipcRenderer.send('user:message', usermessage);
-                //document.getElementById("message").value="";
+                }                
             } 
     
             ipcRenderer.on('bot:answer', function(e, reply){
 
                 insertChat("cbot",reply,0);
 
-                //let answerDiv = document.getElementById('chatMessage');
-                //answerDiv.innerHTML+='<br>'+'<b>'+"ATLAS Bot: "+'</b>'+reply+'</br>';
             })
 
 
@@ -56,19 +63,19 @@
                 var minutes = date.getMinutes();
                 var ampm = hours >= 12 ? 'PM' : 'AM';
                 hours = hours % 12;
-                hours = hours ? hours : 12; // the hour '0' should be '12'
+                hours = hours ? hours : 12; 
                 minutes = minutes < 10 ? '0'+minutes : minutes;
                 var strTime = hours + ':' + minutes + ' ' + ampm;
                 return strTime;
             }
             
             function insertChat(who, text, time = 0){
-                var control = "";
+                var conversation = "";
                 var date = formatAMPM(new Date());
     
                 if (who == "cbot"){
                     
-                    control = '<li style="width:100%">' +
+                    conversation = '<li style="width:100%">' +
                                     '<div class="msj macro">' +
                                     '<div class="avatar"><img class="img-circle" style="width:100%;" src="'+ cbot.avatar +'" /></div>' +
                                         '<div class="text text-l">' +
@@ -78,7 +85,7 @@
                                     '</div>' +
                                 '</li>';                    
                 }else{
-                    control = '<li style="width:100%;">' +
+                    conversation = '<li style="width:100%;">' +
                                     '<div class="msj-rta macro">' +
                                         '<div class="text text-r">' +
                                             '<p>'+text+'</p>' +
@@ -89,7 +96,7 @@
                 }
                 setTimeout(
                     function(){                                                                       
-                        $("ul").append(control);
+                        $("ul").append(conversation);
                         $("#message").val("");
                     }, time);
     
