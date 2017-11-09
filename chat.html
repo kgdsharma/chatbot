@@ -54,9 +54,11 @@
 
 
             var agent = {};
-            agent.avatar = "../ChatBot/assets/icons/AGT.JPG";
+            const Path = require('path');           
+            agent.avatar = "https://cbot-api.cfapps.io/images/AGT.JPG"           
             var cbot = {};
-            cbot.avatar = "../ChatBot/assets/icons/BOT.JPG";
+            cbot.avatar = "https://cbot-api.cfapps.io/images/BOT.JPG";
+            
 
             function formatAMPM(date) {
                 var hours = date.getHours();

@@ -3,20 +3,29 @@
   "version": "1.0.0",
   "description": "basic chatbot",
   "main": "index.js",
-  "author": "",
+  "author": "Krishna Sharma",
   "license": "ISC",
   "scripts": {
     "start": "electron .",
-    "package-win": "electron-packager . Chatbot --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/Mysitemyway-Clean-3d-Glossy-3d-blue-orbs2-046.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"chatbot\" "
+    "package-win": "electron-packager . Chatbot --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/Mysitemyway-Clean-3d-Glossy-3d-blue-orbs2-046.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"chatbot\" ",
+    "installer": "build"
+  },
+  "build": {
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+      }
   },
   "dependencies": {
-    "bootstrap": "^3.3.7",
-    "electron": "^1.7.9",
+    "bootstrap": "^3.3.7",        
     "jquery": "^3.2.1",
     "node-rest-client": "^3.1.0",
     "request": "^2.83.0"
   },
   "devDependencies": {
+    "electron-builder": "^19.45.4",
+    "electron": "^1.7.9",
     "electron-packager": "^9.1.0"
+    
   }
 }

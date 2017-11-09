@@ -38,7 +38,7 @@ ipcMain.on('user:message', function(e, usermessage){
       headers: { "Content-Type": "application/json" }
       };
 
-    client.post("https://chatbot-api.cfapps.io/api/v1/answerme", args, function (data, response) {
+    client.post("https://cbot-api.cfapps.io/api/v1/answerme", args, function (data, response) {
           var body = JSON.stringify(data);
           var conversation = JSON.parse(body); 
           mainWindow.webContents.send('bot:answer',conversation.answer);   
