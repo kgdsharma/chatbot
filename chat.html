@@ -44,20 +44,22 @@
                 insertChat("agent", usermessage,0);
                 ipcRenderer.send('user:message', usermessage);
                 }                
-            } 
-    
+            }    
             ipcRenderer.on('bot:answer', function(e, reply){
-
                 insertChat("cbot",reply,0);
-
             })
+
+           $(document).ready(function(){
+            ipcRenderer.send('user:message', "ask me");
+            //insertChat("cbot","ask me",0);
+           });
 
 
             var agent = {};
             const Path = require('path');           
-            agent.avatar = "https://cbot-api.cfapps.io/images/ccr.png"           
+            agent.avatar = "https://abot-api.cfapps.io/images/ccr.png"           
             var cbot = {};
-            cbot.avatar = "https://cbot-api.cfapps.io/images/robot.png";
+            cbot.avatar = "https://abot-api.cfapps.io/images/robot.png";
             
 
             function formatAMPM(date) {
@@ -70,7 +72,7 @@
                 var strTime = hours + ':' + minutes + ' ' + ampm;
                 return strTime;
             }
-            
+                        
             function insertChat(who, text, time = 0){
                 var conversation = "";
                 var date = formatAMPM(new Date());
